@@ -18,15 +18,15 @@ def logger(func):
         res  = func(*args, **kwargs)
         f_name = func.__name__
 
-        if os.path.isfile('personal_transactions.csv'):
-            csv = pd.read_csv('personal_transactions.csv')
+        if os.path.isfile('name.csv'):
+            csv = pd.read_csv('name.csv')
             columns = {'': [len(csv)], "Пользователь": [user], "Действие": [f_name],"Дата": [date()],"Время":[time()]}
             DF = pd.DataFrame(columns)
-            DF.to_csv('personal_transactions.csv', mode = 'r', index = False, header = False)
+            DF.to_csv('name.csv', mode = 'r', index = False, header = False)
         else:
             columns = {"Пользователь": [user], "Действие": [f_name],"Дата": [date()],"Время":[time()]}
             DF = pd.DataFrame(columns)
-            DF.to_csv('personal_transactions.csv')
+            DF.to_csv('name.csv')
         return res
     return wrapper
     

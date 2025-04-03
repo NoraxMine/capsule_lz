@@ -1,50 +1,25 @@
 import matplotlib.pyplot as plt
-import os
-import datetime
+from loger_for_diag import loger
 import pandas as pd
-import numpy as nm
 
 
-
-
-
-
-
-
-
-
-df = pd.read_csv('personal_transactions.csv', header=None) # чтение файла без заголовков  # выбираем нужные столбцы
-df.columns = ['Date', 'Description', 'Description', 'Transaction Type','Category','Account Name'] # присвоение имен столбцам
-
-
-def logger():
-    def wrapper(*args, **kwargs):
-       
-        df = pd.read_csv("personal_transactions.csv", usecols=[5])
-        
-        
-
-        
-        
-    return wrapper
-
+class Diagrama:
     
-# Данные для диаграммы
-a = df.value_counts()
-z = int(a[0])
-x = int(a[1])
-c = int(a[2])
-labels = [z, x, c]
-sizes = [40, 30, 30]  # Доли в процентах
-colors = ['gold', 'yellowgreen', 'lightcoral']  # Цвета сегментов
+    def __init__(self, carts):
+        self.carts = carts 
 
-# Построение диаграммы
-plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
+    @loger
+    def diagrama(self):
+        df = pd.read_csv(self.carts)
+        
+        value_counts = df.iloc[:, 5].value_counts()
+        label = value_counts.index
+        size = value_counts.values
+        colors = ['gold', 'yellowgreen', 'lightcoral']
 
-# Настройка оси для круговой диаграммы
-plt.axis('equal')
+        plt.pie(size, labels=label, colors=colors, autopct='%1.1f%%', startangle=140)
+        plt.axis('equal')
+        plt.show()
 
-# Показать диаграмму
-plt.show()
-
-logger()
+    def __del__(self):
+        print(" ")
